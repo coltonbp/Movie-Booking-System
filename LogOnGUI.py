@@ -190,4 +190,7 @@ class MainGUI:
         LogOnGUI(tk.Tk())
 
 if __name__ == "__main__":
-    LogOnGUI(tk.Tk())
+    root = tk.Tk()
+    root.geometry("1000x800")
+    app = LogOnGUI(root)
+    root.mainloop()
