@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import Spinbox
+import random
 
 class PurchaseWindow:
     def __init__(self, parent):
@@ -18,9 +20,15 @@ class PurchaseWindow:
         self.pp_label.grid(row=1, column=0, padx=5, pady=5)
         self.pp_entry.grid(row=1, column=1, padx=5, pady=5)
         
+        # Create widgets for selecting number of tickets
+        self.tickets_label = tk.Label(self.parent, text="Number of Tickets:")
+        self.tickets_spinbox = tk.Spinbox(self.parent, from_=1, to=10)
+        self.tickets_label.grid(row=2, column=0, padx=5, pady=5)
+        self.tickets_spinbox.grid(row=2, column=1, padx=5, pady=5)
+        
         # Create purchase button
         self.purchase_button = tk.Button(self.parent, text="Purchase", command=self.purchase)
-        self.purchase_button.grid(row=2, column=0, columnspan=2, padx=5, pady=5)
+        self.purchase_button.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
         
     def purchase(self):
         # Check if either credit card or PayPal information is filled out
@@ -41,15 +49,14 @@ class PurchaseWindow:
         self.pp_entry.delete(0, tk.END)
         
         # Create new window with default image
+        ticket_num = str(random.randint(100000, 999999))
+        
+        # open new window to show ticket number
         new_window = tk.Toplevel(self.parent)
         new_window.title("Thank You")
         new_window.geometry("400x400")
-        image_label = tk.Label(new_window, text="Thank you for your purchase!", font=("Helvetica", 16))
-        image_label.pack(pady=20)
-        default_image = tk.PhotoImage(file="default_image.png")
-        image_widget = tk.Label(new_window, image=default_image)
-        image_widget.image = default_image # keep reference to image to avoid garbage collection
-        image_widget.pack(pady=20)
+        ticket_label = tk.Label(new_window, text="Your conformation number is: " + ticket_num, font=("Helvetica", 16))
+        ticket_label.pack(pady=20)
         
 
 if __name__ == "__main__":
