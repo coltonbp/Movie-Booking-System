@@ -59,12 +59,16 @@ class main(tk.Frame):
         password = self.password_entry.get()
         #verify if correct (should probably do this in a seperate class dedicated to managing database entries)
         verified = False
-        with open('accounts.csv', 'r', newline='') as accountFile:
-            reader = csv.reader(accountFile)
-            for row in reader:
-                if username == row[0] and password == row[1]:
-                    verified = True
-                    break
+        try:
+            with open('accounts.csv', 'r', newline='') as accountFile:
+                reader = csv.reader(accountFile)
+                for row in reader:
+                    if username == row[0] and password == row[1]:
+                        verified = True
+                        break
+        except FileNotFoundError:
+            #file may not exist yet if there have been no accounts created.
+            pass
                     
         if verified == True:
             error_msg = ""

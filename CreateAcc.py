@@ -90,25 +90,39 @@ class main(tk.Frame):
         else:
             #check if an existing user already exists with this username (should probably do this in a seperate class dedicated to managing database entries)
             userExists = False
-            with open('accounts.csv', 'r', newline='') as accountFile:
-                reader = csv.reader(accountFile)
-                for row in reader:
-                    if username == row[0]:
-                        error_msg = f"{username} already has an account! Are you trying to log in?"
-                        userExists = True
+            try:
+                with open('accounts.csv', 'r', newline='') as accountFile:
+                    reader = csv.reader(accountFile)
+                    for row in reader:
+                        if username == row[0]:
+                            error_msg = f"{username} already has an account! Are you trying to log in?"
+                            userExists = True
+            except FileNotFoundError:
+                #file doesn't exist yet, it'll get created with the first account though.
+                pass
             if userExists == False:
                 error_msg = ""
-                with open('accounts.csv', 'a', newline='', encoding='utf-8') as accountFile:
-                    writer = csv.writer(accountFile)
-                    row = [username, password, name, home, phone]
-                    writer.writerow(row)
+                try:
+                    with open('accounts.csv', 'a', newline='', encoding='utf-8') as accountFile:
+                        writer = csv.writer(accountFile)
+                        row = [username, password, name, home, phone]
+                        writer.writerow(row)
+                except PermissionError:
+                    error_msg = "An error occurred due to file access permission being denied."
+                    self.error_label.config(text=error_msg)
+                    return
                 #go back to login on successful account creation
+                self.resetForm()
                 controller.show_frame(LogIn.main)
         self.error_label.config(text=error_msg)
 
     def btn_back(self, controller):
         print("back")
         #clear all fields to protect privacy
+        self.resetForm()
+        controller.show_frame(LogIn.main)
+
+    def resetForm(self):
         self.username_entry.delete(0, 'end')
         self.password_entry.delete(0, 'end')
         self.passwordconfirm_entry.delete(0, 'end')
@@ -116,5 +130,4 @@ class main(tk.Frame):
         self.home_entry.delete(0, 'end')
         self.phone_entry.delete(0, 'end')
         self.error_label.config(text="")
-        controller.show_frame(LogIn.main)
         
