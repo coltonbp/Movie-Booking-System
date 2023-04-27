@@ -49,13 +49,13 @@ class PurchaseWindow:
         self.pp_entry.delete(0, tk.END)
         
         # Create new window with default image
-        ticket_num = str(random.randint(100000, 999999))
+        conf_num = str(random.randint(100000, 999999))
         
         # open new window to show ticket number
         new_window = tk.Toplevel(self.parent)
         new_window.title("Thank You")
         new_window.geometry("400x400")
-        ticket_label = tk.Label(new_window, text="Your conformation number is: " + ticket_num, font=("Helvetica", 16))
+        ticket_label = tk.Label(new_window, text="Your conformation number is: " + conf_num, font=("Helvetica", 16))
         ticket_label.pack(pady=20)
         
 
