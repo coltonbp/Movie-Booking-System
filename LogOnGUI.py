@@ -11,13 +11,17 @@ class LogOnGUI:
         welcome_label = tk.Label(self.root, text="Welcome", font=("Helvetica", 16))
         welcome_label.grid(row=0, column=0, columnspan=2)
 
-        # Log in button
-        login_button = tk.Button(self.root, text="Log in", command=self.log_in)
+        # Log in as User button
+        login_button = tk.Button(self.root, text="Log in as User", command=self.log_in)
         login_button.grid(row=1, column=0)
+
+        # Log in as Admin button
+        admin_login_button = tk.Button(self.root, text="Log in as Admin", command=self.admin_log_in)
+        admin_login_button.grid(row=1, column=1)
 
         # Create account button
         create_button = tk.Button(self.root, text="Create account", command=self.create_account)
-        create_button.grid(row=1, column=1)
+        create_button.grid(row=1, column=2)
 
         # Username label and entry
         self.username_label = tk.Label(self.root, text="Username:")
@@ -30,6 +34,64 @@ class LogOnGUI:
         # Security question label and entry
         self.security_question_label = tk.Label(self.root, text="Security question:")
         self.security_question_entry = tk.Entry(self.root)
+
+    def admin_log_in(self):
+        # Hide user login widgets
+        self.username_label.grid_remove()
+        self.username_entry.grid_remove()
+        self.password_label.grid_remove()
+        self.password_entry.grid_remove()
+        self.security_question_label.grid_remove()
+        self.security_question_entry.grid_remove()
+
+        # Show admin login widgets
+        self.username_label = tk.Label(self.root, text="Admin Username:")
+        self.username_entry = tk.Entry(self.root)
+
+        self.password_label = tk.Label(self.root, text="Admin Password:")
+        self.password_entry = tk.Entry(self.root, show="*")
+
+        # Submit button
+        submit_button = tk.Button(self.root, text="Submit", command=lambda: self.admin_log_in_submit())
+        submit_button.grid(row=4, column=1)
+
+        self.username_label.grid(row=2, column=0)
+        self.username_entry.grid(row=2, column=1)
+
+        self.password_label.grid(row=3, column=0)
+        self.password_entry.grid(row=3, column=1)
+
+    def admin_log_in_submit(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+
+        if username == "redraider" and password == "12345":
+            # Display welcome message for admin
+            message_label = tk.Label(self.root, text="Welcome Admin!")
+            message_label.grid(row=4, column=0, columnspan=2)
+
+            self.loginv = 2 # Set loginv value to 2 to identify admin login
+
+        else:
+            # Display authentication failed message for admin
+            message_label = tk.Label(self.root, text="Admin Authentication Failed!")
+            message_label.grid(row=4, column=0)
+
+    def security_question_submit(self):
+        security_question = self.security_question_entry.get()
+
+        if security_question == "Lubbock":
+            # Display welcome message
+            message_label = tk.Label(self.root, text="Welcome")
+            message_label.grid(row=7, column=0, columnspan=2)
+
+            self.loginv = 1  # this will help with the preconditions of the next classes
+        else:
+            # Display wrong answer message
+            message_label = tk.Label(self.root, text="Wrong answer")
+            message_label.grid(row=6, column=0)
+
+    
 
     def log_in(self):
         # Hide create account widgets
@@ -54,8 +116,13 @@ class LogOnGUI:
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        if username == "Student" and password == "Tech":
-            # Show security question widgets
+        if username == "redraider" and password == "12345":
+            # Display welcome message for admin
+            message_label = tk.Label(self.root, text="Welcome Admin")
+            message_label.grid(row=4, column=0)
+            self.loginv = 2  # set login variable to 2 for admin access
+        elif username == "Student" and password == "Tech":
+            # Show security question widgets for regular user
             self.security_question_label.grid(row=5, column=0)
             self.security_question_entry.grid(row=5, column=1)
 
@@ -67,20 +134,6 @@ class LogOnGUI:
             # Display authentication failed message
             message_label = tk.Label(self.root, text="Authentication Failed")
             message_label.grid(row=4, column=0)
-
-    def security_question_submit(self):
-        security_question = self.security_question_entry.get()
-
-        if security_question == "Lubbock":
-            # Display welcome message
-            message_label = tk.Label(self.root, text="Welcome")
-            message_label.grid(row=7, column=0, columnspan=2)
-
-            self.loginv = 1  # this will help with the preconditions of the next classes
-        else:
-            # Display wrong answer message
-            message_label = tk.Label(self.root, text="Wrong answer")
-            message_label.grid(row=6, column=0)
 
    
 
@@ -184,13 +237,11 @@ class MainGUI:
 
     def log_out(self):
         self.root.destroy()
-
-    def showinfo(self,inf): # indent these:
-        self.value.set(inf)
         LogOnGUI(tk.Tk())
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.geometry("1000x800")
+    root.geometry("800x800")
     app = LogOnGUI(root)
     root.mainloop()
+
