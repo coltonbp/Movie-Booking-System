@@ -1,12 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
 import csv
+import fetch as db
 import CreateAcc
 import ViewCatalog
 
 Header1 = ("Helvetica", 25)
 Header2 = ("Helvetica", 16)
 LargeText = ("Helvetica", 14)
+adminUser='admin'
+adminPass='adminpass'
+username = 'defaultuser'
+isAdmin = False
 
 class main(tk.Frame): 
     def __init__(self, parent, controller):
@@ -52,33 +57,55 @@ class main(tk.Frame):
         # Create account button
         self.create_button = tk.Button(self, text="Create Account", width=30, command=lambda: self.btn_create(controller))
         self.create_button.grid(row=9, column=1)
-        
+
+    def newLogin(self, controller, username, isAdmin):
+        self.username = username
+        self.isAdmin = isAdmin
+        name = db.readFrom("accounts", username, "name")
+        print("New Login: " + self.username + " (" + str(name) + "), isAdmin: " + str(self.isAdmin))
+        info = [username, isAdmin, name]
+        db.writeTo("currentLogin", [info], 'w')
+        ViewCatalog.main.refresh(self)
+
+    def resetForm(self):
+        self.username_entry.delete(0, 'end')
+        self.password_entry.delete(0, 'end')
+        self.error_label.config(text="")
+    
     def btn_login(self, controller):
         #get data from entry fields
         username = self.username_entry.get()
         password = self.password_entry.get()
         #verify if correct (should probably do this in a seperate class dedicated to managing database entries)
         verified = False
-        try:
-            with open('accounts.csv', 'r', newline='') as accountFile:
-                reader = csv.reader(accountFile)
-                for row in reader:
-                    if username == row[0] and password == row[1]:
-                        verified = True
-                        break
-        except FileNotFoundError:
-            #file may not exist yet if there have been no accounts created.
-            pass
-                    
-        if verified == True:
+        admin = False
+        if username == adminUser and password == adminPass:
+            verified = True
+            admin = True
             error_msg = ""
-            #clear all fields to protect privacy
-            self.username_entry.delete(0, 'end')
-            self.password_entry.delete(0, 'end')
-            self.error_label.config(text="")
+            self.resetForm()
+            self.newLogin(controller, username, True)
             controller.show_frame(ViewCatalog.main)
         else:
-            error_msg = "Username and/or password are incorrect or do not exist."
+            try:
+                with open('accounts.csv', 'r', newline='') as accountFile:
+                    reader = csv.reader(accountFile)
+                    for row in reader:
+                        if username == row[0] and password == row[1]:
+                            verified = True
+                            break
+            except FileNotFoundError:
+                #file may not exist yet if there have been no accounts created.
+                pass
+                        
+            if verified == True:
+                error_msg = ""
+                #clear all fields to protect privacy
+                self.resetForm()
+                self.newLogin(controller, username, False)
+                controller.show_frame(ViewCatalog.main)
+            else:
+                error_msg = "Username and/or password are incorrect or do not exist."
         self.error_label.config(text=error_msg)
 
     def btn_create(self, controller):

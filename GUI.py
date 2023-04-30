@@ -11,7 +11,7 @@ class GUI(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.wm_title("West TX")
-        self.geometry("1000x800")
+        self.geometry("1000x750")
 
         container = tk.Frame(self, width=1000, height=800)
         container.pack(side="top", fill="both", expand=True)
@@ -28,6 +28,10 @@ class GUI(tk.Tk):
     def show_frame(self, container):
         frame = self.frames[container]
         frame.tkraise()
+
+    def refresh_frame(self, container):
+        frame = self.frames[container]
+        frame.refresh()
 
 if __name__ == "__main__":
     app = GUI()
