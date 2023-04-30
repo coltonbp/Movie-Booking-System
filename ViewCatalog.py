@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import csv
+import random
 import fetch as db
 import LogIn
 import ManageShows
@@ -174,6 +175,7 @@ class main(tk.Frame):
         reviewRate = 1
         reviewDesc = "Despite what you might think, this movie is, in fact, not cool at all."
         shows = db.searchFor('shows', searchterm)
+        reviews = []
         i = 0
         while i < 3:
             j = catalogScroll + i
@@ -182,6 +184,17 @@ class main(tk.Frame):
                     self.show1Title_label.config(text=shows[j][0])
                     self.show1Desc_label.config(text=shows[j][2])
                     self.show1Times_label.config(text=shows[j][3])
+                    reviews = db.readFrom('reviews', shows[j][0], '', True)
+                    if len(reviews) > 0:
+                        r = random.randrange(len(reviews))
+                        self.show1ReviewUser_label.config(text=reviews[r][1])
+                        self.show1ReviewDesc_label.config(text=reviews[r][3])
+                        self.show1ReviewRate_label.config(text=str(reviews[r][2]) + "/5 Stars")
+                    else:
+                        self.show1ReviewUser_label.config(text='')
+                        self.show1ReviewDesc_label.config(text='')
+                        self.show1ReviewRate_label.config(text='')
+                    
                     if shows[j][1] == "1" or isAdmin:
                         self.show1_button.config(state=tk.NORMAL)
                     else:
@@ -190,7 +203,16 @@ class main(tk.Frame):
                     self.show2Title_label.config(text=shows[j][0])
                     self.show2Desc_label.config(text=shows[j][2])
                     self.show2Times_label.config(text=shows[j][3])
-                    self.show2_button.config(state=tk.NORMAL)
+                    reviews = db.readFrom('reviews', shows[j][0], '', True)
+                    if len(reviews) > 0:
+                        r = random.randrange(len(reviews))
+                        self.show2ReviewUser_label.config(text=reviews[r][1])
+                        self.show2ReviewDesc_label.config(text=reviews[r][3])
+                        self.show2ReviewRate_label.config(text=str(reviews[r][2]) + "/5 Stars")
+                    else:
+                        self.show2ReviewUser_label.config(text='')
+                        self.show2ReviewDesc_label.config(text='')
+                        self.show2ReviewRate_label.config(text='')
                     if shows[j][1] == "1" or isAdmin:
                         self.show2_button.config(state=tk.NORMAL)
                     else:
@@ -200,7 +222,16 @@ class main(tk.Frame):
                     self.show3Title_label.config(text=shows[j][0])
                     self.show3Desc_label.config(text=shows[j][2])
                     self.show3Times_label.config(text=shows[j][3])
-                    self.show3_button.config(state=tk.NORMAL)
+                    reviews = db.readFrom('reviews', shows[j][0], '', True)
+                    if len(reviews) > 0:
+                        r = random.randrange(len(reviews))
+                        self.show3ReviewUser_label.config(text=reviews[r][1])
+                        self.show3ReviewDesc_label.config(text=reviews[r][3])
+                        self.show3ReviewRate_label.config(text=str(reviews[r][2]) + "/5 Stars")
+                    else:
+                        self.show3ReviewUser_label.config(text='')
+                        self.show3ReviewDesc_label.config(text='')
+                        self.show3ReviewRate_label.config(text='')
                     if shows[j][1] == "1" or isAdmin:
                         self.show3_button.config(state=tk.NORMAL)
                     else:

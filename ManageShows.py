@@ -91,11 +91,9 @@ class main(tk.Frame):
     def btn_submit(self, controller):
         shows = db.readFrom('shows', '', '', True)
         if self.showVar.get() == "+ Add New Show":
-            print("create show")
             newShow = [self.showtitle_entry.get(), self.showActive.get(), self.showdesc_entry.get(), self.showtimes_entry.get()]
             shows.append(newShow)
         else:
-            print("edit show")
             for show in shows:
                 if show[0] == self.showVar.get():
                     show[0] = self.showtitle_entry.get()
@@ -103,7 +101,6 @@ class main(tk.Frame):
                     show[2] = self.showdesc_entry.get()
                     show[3] = self.showtimes_entry.get()
         shows.sort()
-        print("shows: " + str(shows))
         db.writeTo('shows', shows, 'w')
         self.resetForm()
         self.refresh()
@@ -111,14 +108,12 @@ class main(tk.Frame):
         controller.show_frame(ViewCatalog.main)
 
     def btn_delete(self):
-        print("delete")
         idToDelete = self.showVar.get()
         db.deleteFrom('shows', idToDelete)
         self.resetForm()
         self.refresh()
 
     def btn_back(self, controller):
-        print("back")
         #clear all fields to protect privacy
         self.resetForm()
         ViewCatalog.main.refresh()

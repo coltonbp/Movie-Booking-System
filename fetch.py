@@ -21,6 +21,12 @@ def readFrom(db, username='', fetch='', alwaysReturnList=False):
         fetchValue = 1
     elif fetch == "times":
         fetchValue = 2
+    elif fetch == "reviewUser":
+        fetchValue = 1
+    elif fetch == "reviewDesc":
+        fetchValue = 2
+    elif fetch == "reviewRate":
+        fetchValue = 3
     try:
         with open(f'{db}.csv', 'r', newline='') as file:
             reader = csv.reader(file)
