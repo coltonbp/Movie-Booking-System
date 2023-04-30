@@ -262,9 +262,13 @@ class main(tk.Frame):
                 self.btn_reviewMovie(controller, isAdmin)
                 ManageShows.main.selectShow(self, self.show1Title_label["text"])
             elif btnId == 1:
-                print("Edit Show2")
+                print("Edit " + self.show2Title_label["text"])
+                self.btn_reviewMovie(controller, isAdmin)
+                ManageShows.main.selectShow(self, self.show2Title_label["text"])
             elif btnId == 2:
-                print("Edit Show3")
+                print("Edit " + self.show3Title_label["text"])
+                self.btn_reviewMovie(controller, isAdmin)
+                ManageShows.main.selectShow(self, self.show3Title_label["text"])
         else:
             if btnId == 0:
                 print("Book Show1")
