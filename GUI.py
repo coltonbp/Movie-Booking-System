@@ -5,6 +5,7 @@ import CreateAcc
 import ViewCatalog
 import ManageShows
 import LeaveReview
+import BookTicket
 
 Header1 = ("Helvetica", 16)
 Header2 = ("Helvetica", 12)
@@ -12,7 +13,7 @@ Header2 = ("Helvetica", 12)
 class GUI(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        self.wm_title("West TX")
+        self.wm_title("West TX Movie Booking System")
         self.geometry("1000x750")
 
         container = tk.Frame(self, width=1000, height=800)
@@ -21,7 +22,7 @@ class GUI(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for page in (LogIn.main, CreateAcc.main, ViewCatalog.main, ManageShows.main, LeaveReview.main):
+        for page in (LogIn.main, CreateAcc.main, ViewCatalog.main, ManageShows.main, LeaveReview.main, BookTicket.main):
             frame = page(container, self)
             self.frames[page] = frame
             frame.grid(row=0, column=0, sticky="nsew")

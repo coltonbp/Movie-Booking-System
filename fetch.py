@@ -18,9 +18,9 @@ def readFrom(db, username='', fetch='', alwaysReturnList=False):
     elif fetch == "titles":
         fetchValue = 0
     elif fetch == "desc":
-        fetchValue = 1
-    elif fetch == "times":
         fetchValue = 2
+    elif fetch == "times":
+        fetchValue = 3
     elif fetch == "reviewUser":
         fetchValue = 1
     elif fetch == "reviewDesc":

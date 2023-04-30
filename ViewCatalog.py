@@ -6,6 +6,7 @@ import fetch as db
 import LogIn
 import ManageShows
 import LeaveReview
+import BookTicket
 
 Header1 = ("Helvetica", 25)
 Header2 = ("Helvetica", 16)
@@ -105,7 +106,7 @@ class main(tk.Frame):
         self.show3ReviewRate_label.grid(row=10, column=2, sticky="nsew")
 
         #review desc
-        self.show1ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200)
+        self.show1ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200, justify='top')
         self.show2ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200)
         self.show3ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200)
         self.show1ReviewDesc_label.grid(row=5, column=1, columnspan=2, sticky="nsew")
@@ -170,11 +171,11 @@ class main(tk.Frame):
         self.welcome_label.config(text=f"Welcome, {name}")
 
         #refresh listings
-        showTimes = ['12:00p', '2:30p', '5:30p', '9:00p']
-        showDesc = "This very cool movie is bound to knock your socks off! Starring John Johnson and Jane Jackson, Directed by Don Donaldson."
-        reviewUser = "Movie_Lover"
-        reviewRate = 1
-        reviewDesc = "Despite what you might think, this movie is, in fact, not cool at all."
+##        showTimes = ['12:00p', '2:30p', '5:30p', '9:00p']
+##        showDesc = "This very cool movie is bound to knock your socks off! Starring John Johnson and Jane Jackson, Directed by Don Donaldson."
+##        reviewUser = "Movie_Lover"
+##        reviewRate = 1
+##        reviewDesc = "Despite what you might think, this movie is, in fact, not cool at all."
         shows = db.searchFor('shows', searchterm)
         reviews = []
         i = 0
@@ -316,11 +317,17 @@ class main(tk.Frame):
                 ManageShows.main.selectShow(self, self.show3Title_label["text"])
         else:
             if btnId == 0:
-                print("Book Show1")
+                BookTicket.main.initShow(self, self.show1Title_label["text"])
+                BookTicket.main.refresh(self)
+                controller.show_frame(BookTicket.main)
             elif btnId == 1:
-                print("Book Show2")
+                BookTicket.main.initShow(self, self.show2Title_label["text"])
+                BookTicket.main.refresh(self)
+                controller.show_frame(BookTicket.main)
             elif btnId == 2:
-                print("Book Show3")
+                BookTicket.main.initShow(self, self.show3Title_label["text"])
+                BookTicket.main.refresh(self)
+                controller.show_frame(BookTicket.main)
 
     def btn_logOut(self, controller):
         print("Log Out")
