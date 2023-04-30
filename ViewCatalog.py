@@ -180,19 +180,31 @@ class main(tk.Frame):
             if j < len(shows):
                 if i == 0:
                     self.show1Title_label.config(text=shows[j][0])
-                    self.show1Desc_label.config(text=shows[j][1])
-                    self.show1Times_label.config(text=shows[j][2])
-                    self.show1_button.config(state=tk.NORMAL)
+                    self.show1Desc_label.config(text=shows[j][2])
+                    self.show1Times_label.config(text=shows[j][3])
+                    if shows[j][1] == "1" or isAdmin:
+                        self.show1_button.config(state=tk.NORMAL)
+                    else:
+                        self.show1_button.config(state=tk.DISABLED)
                 elif i == 1:
                     self.show2Title_label.config(text=shows[j][0])
-                    self.show2Desc_label.config(text=shows[j][1])
-                    self.show2Times_label.config(text=shows[j][2])
+                    self.show2Desc_label.config(text=shows[j][2])
+                    self.show2Times_label.config(text=shows[j][3])
                     self.show2_button.config(state=tk.NORMAL)
+                    if shows[j][1] == "1" or isAdmin:
+                        self.show2_button.config(state=tk.NORMAL)
+                    else:
+                        self.show2_button.config(state=tk.DISABLED)
+                    
                 elif i == 2:
                     self.show3Title_label.config(text=shows[j][0])
-                    self.show3Desc_label.config(text=shows[j][1])
-                    self.show3Times_label.config(text=shows[j][2])
+                    self.show3Desc_label.config(text=shows[j][2])
+                    self.show3Times_label.config(text=shows[j][3])
                     self.show3_button.config(state=tk.NORMAL)
+                    if shows[j][1] == "1" or isAdmin:
+                        self.show3_button.config(state=tk.NORMAL)
+                    else:
+                        self.show3_button.config(state=tk.DISABLED)
             else:
                 if i == 0:
                     self.show1Title_label.config(text="")

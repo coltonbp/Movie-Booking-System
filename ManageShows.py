@@ -56,17 +56,22 @@ class main(tk.Frame):
         self.showtimes_entry = tk.Entry(self, width=30)
         self.showtimes_entry.grid(row=9, column=1, columnspan=2)
 
+        # active show toggle
+        self.showActive = tk.IntVar(self)
+        self.active_check = tk.Checkbutton(self, text="Show Active", variable=self.showActive)
+        self.active_check.grid(row=10, column=1, columnspan=2)
+
         # Submit button
         self.submit_button = tk.Button(self, text="Create/Edit Show", width=30, command=lambda: self.btn_submit(controller))
-        self.submit_button.grid(row=10, column=1, columnspan=2)
+        self.submit_button.grid(row=11, column=1, columnspan=2)
 
         # Back button
         self.back_button = tk.Button(self, text="Go Back", width=30, command=lambda: self.btn_back(controller))
-        self.back_button.grid(row=11, column=1, sticky="ne")
+        self.back_button.grid(row=12, column=1, sticky="ne")
 
         # Delete button
         self.del_button = tk.Button(self, text="Delete Show", width=30, command=lambda: self.btn_delete(), state=tk.DISABLED)
-        self.del_button.grid(row=11, column=2, sticky="nw")
+        self.del_button.grid(row=12, column=2, sticky="nw")
 
         global thisSelf
         thisSelf = self
@@ -87,15 +92,17 @@ class main(tk.Frame):
         shows = db.readFrom('shows', '', '', True)
         if self.showVar.get() == "+ Add New Show":
             print("create show")
-            newShow = [self.showtitle_entry.get(), self.showdesc_entry.get(), self.showtimes_entry.get()]
+            newShow = [self.showtitle_entry.get(), self.showActive.get(), self.showdesc_entry.get(), self.showtimes_entry.get()]
             shows.append(newShow)
         else:
             print("edit show")
             for show in shows:
                 if show[0] == self.showVar.get():
                     show[0] = self.showtitle_entry.get()
-                    show[1] = self.showdesc_entry.get()
-                    show[2] = self.showtimes_entry.get()
+                    show[1] = self.showActive.get()
+                    show[2] = self.showdesc_entry.get()
+                    show[3] = self.showtimes_entry.get()
+        shows.sort()
         print("shows: " + str(shows))
         db.writeTo('shows', shows, 'w')
         self.resetForm()
@@ -127,8 +134,12 @@ class main(tk.Frame):
         else:
             showInfo = db.readFrom('shows', showToEdit, '')
             self.showtitle_entry.insert(0, showInfo[0])
-            self.showdesc_entry.insert(0, showInfo[1])
-            self.showtimes_entry.insert(0, showInfo[2])
+            self.showdesc_entry.insert(0, showInfo[2])
+            self.showtimes_entry.insert(0, showInfo[3])
+            if showInfo[1] == "1":
+                self.active_check.select()
+            else:
+                self.active_check.deselect()
             self.del_button.config(state=tk.NORMAL)
             
     def selectShow(self, showToSelect):
