@@ -4,6 +4,7 @@ import LogIn
 import CreateAcc
 import ViewCatalog
 import ManageShows
+import LeaveReview
 
 Header1 = ("Helvetica", 16)
 Header2 = ("Helvetica", 12)
@@ -20,7 +21,7 @@ class GUI(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for page in (LogIn.main, CreateAcc.main, ViewCatalog.main, ManageShows.main):
+        for page in (LogIn.main, CreateAcc.main, ViewCatalog.main, ManageShows.main, LeaveReview.main):
             frame = page(container, self)
             self.frames[page] = frame
             frame.grid(row=0, column=0, sticky="nsew")

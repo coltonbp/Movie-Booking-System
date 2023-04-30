@@ -5,6 +5,7 @@ import random
 import fetch as db
 import LogIn
 import ManageShows
+import LeaveReview
 
 Header1 = ("Helvetica", 25)
 Header2 = ("Helvetica", 16)
@@ -296,7 +297,8 @@ class main(tk.Frame):
             ManageShows.main.refresh()
             controller.show_frame(ManageShows.main)
         else:
-            print("Review Movie")
+            LeaveReview.main.refresh()
+            controller.show_frame(LeaveReview.main)
 
     def btn_bookTickets(self, controller, isAdmin, btnId):
         if isAdmin:
