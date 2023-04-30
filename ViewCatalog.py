@@ -3,6 +3,7 @@ from tkinter import ttk
 import csv
 import fetch as db
 import LogIn
+import ManageShows
 
 Header1 = ("Helvetica", 25)
 Header2 = ("Helvetica", 16)
@@ -110,9 +111,9 @@ class main(tk.Frame):
         self.show3ReviewDesc_label.grid(row=11, column=1, columnspan=2, sticky="nsew")
 
         #show button
-        self.show1_button = tk.Button(self, text='', bg='darkgray', font=Header1, state=tk.DISABLED, command=lambda: self.btn_bookTickets(controller, isAdmin))
-        self.show2_button = tk.Button(self, text='', bg='darkgray', font=Header1, state=tk.DISABLED, command=lambda: self.btn_bookTickets(controller, isAdmin))
-        self.show3_button = tk.Button(self, text='', bg='darkgray', font=Header1, state=tk.DISABLED, command=lambda: self.btn_bookTickets(controller, isAdmin))
+        self.show1_button = tk.Button(self, text='', bg='darkgray', font=Header1, state=tk.DISABLED, command=lambda: self.btn_bookTickets(controller, isAdmin, 0))
+        self.show2_button = tk.Button(self, text='', bg='darkgray', font=Header1, state=tk.DISABLED, command=lambda: self.btn_bookTickets(controller, isAdmin, 1))
+        self.show3_button = tk.Button(self, text='', bg='darkgray', font=Header1, state=tk.DISABLED, command=lambda: self.btn_bookTickets(controller, isAdmin, 2))
         self.show1_button.grid(row=3, column=3, rowspan=3, sticky="nsew")
         self.show2_button.grid(row=6, column=3, rowspan=3, sticky="nsew")
         self.show3_button.grid(row=9, column=3, rowspan=3, sticky="nsew")
@@ -141,7 +142,7 @@ class main(tk.Frame):
     def refresh(self=thisSelf, searchterm=''):
         global thisSelf
         global isAdmin
-        #print("refresh listings with term: '"+searchterm+"'")
+        print("refresh listings with term: '"+searchterm+"'")
         self = thisSelf
 
         isAdmin = (db.readFrom('currentLogin', '', 'admin') == "True")
@@ -221,7 +222,9 @@ class main(tk.Frame):
         
     def btn_search(self):
         global currentSearchTerm
+        global catalogScroll
         searchTerm = self.search_entry.get()
+        catalogScroll = 0
         self.refresh(searchTerm)
         currentSearchTerm = searchTerm
 
@@ -243,18 +246,36 @@ class main(tk.Frame):
             print("View Tickets")
 
     def btn_reviewMovie(self, controller, isAdmin):
+        self.resetSearch(self.search_entry)
+        global catalogScroll
+        catalogScroll = 0
         if isAdmin:
-            print("Manage Shows")
+            ManageShows.main.refresh()
+            controller.show_frame(ManageShows.main)
         else:
             print("Review Movie")
 
-    def btn_bookTickets(self, controller, isAdmin):
+    def btn_bookTickets(self, controller, isAdmin, btnId):
         if isAdmin:
-            print("Edit Show")
+            if btnId == 0:
+                print("Edit " + self.show1Title_label["text"])
+                self.btn_reviewMovie(controller, isAdmin)
+                ManageShows.main.selectShow(self, self.show1Title_label["text"])
+            elif btnId == 1:
+                print("Edit Show2")
+            elif btnId == 2:
+                print("Edit Show3")
         else:
-            print("Book tickets")
+            if btnId == 0:
+                print("Book Show1")
+            elif btnId == 1:
+                print("Book Show2")
+            elif btnId == 2:
+                print("Book Show3")
 
     def btn_logOut(self, controller):
         print("Log Out")
         self.resetSearch(self.search_entry)
+        global catalogScroll
+        catalogScroll = 0
         controller.show_frame(LogIn.main)

@@ -15,6 +15,12 @@ def readFrom(db, username='', fetch='', alwaysReturnList=False):
         fetchValue = 3
     elif fetch == "phone":
         fetchValue = 4
+    elif fetch == "titles":
+        fetchValue = 0
+    elif fetch == "desc":
+        fetchValue = 1
+    elif fetch == "times":
+        fetchValue = 2
     try:
         with open(f'{db}.csv', 'r', newline='') as file:
             reader = csv.reader(file)
@@ -34,19 +40,38 @@ def readFrom(db, username='', fetch='', alwaysReturnList=False):
 
 def searchFor(db, searchTerm):
     results = []
-    with open(f'{db}.csv', 'r', newline='') as file:
-        reader = csv.reader(file)
-        for row in reader:
-            for col in row:
-                if searchTerm in col:
-                    results.append(row)
-                    break
+    try:
+        with open(f'{db}.csv', 'r', newline='') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                for col in row:
+                    if searchTerm in col:
+                        results.append(row)
+                        break
+    except FileNotFoundError:
+        pass
     return results
 
 def writeTo(db, rowsToAdd, mode='a'):
-    for row in rowsToAdd:
-        with open(f'{db}.csv', mode, newline='', encoding='utf-8') as file:
-            writer = csv.writer(file)
+    with open(f'{db}.csv', mode, newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        for row in rowsToAdd:
+            print(row)
             writer.writerow(row)
 
+def deleteFrom(db, idToDelete):
+    contents = []
+    newContents = []
+    with open(f'{db}.csv', 'r', newline='') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            contents.append(row)
+    for row in contents:
+        if row[0] != idToDelete:
+            newContents.append(row)
+    print("contents: " + str(contents))
+    with open(f'{db}.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        for row in newContents:
+            writer.writerow(row)
     
