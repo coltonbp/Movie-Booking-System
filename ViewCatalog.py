@@ -106,7 +106,7 @@ class main(tk.Frame):
         self.show3ReviewRate_label.grid(row=10, column=2, sticky="nsew")
 
         #review desc
-        self.show1ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200, justify='top')
+        self.show1ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200)
         self.show2ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200)
         self.show3ReviewDesc_label = tk.Label(self, text='', font=LargeText, bg='lightgray', height=5, wraplength=200)
         self.show1ReviewDesc_label.grid(row=5, column=1, columnspan=2, sticky="nsew")
