@@ -7,6 +7,8 @@ import LogIn
 import ManageShows
 import LeaveReview
 import BookTicket
+import ViewReport
+import ViewTickets
 
 Header1 = ("Helvetica", 25)
 Header2 = ("Helvetica", 16)
@@ -286,9 +288,11 @@ class main(tk.Frame):
 
     def btn_viewTickets(self, controller, isAdmin):
         if isAdmin:
-            print("View Report")
+            ViewReport.main.refresh()
+            controller.show_frame(ViewReport.main)
         else:
-            print("View Tickets")
+            ViewTickets.main.refresh()
+            controller.show_frame(ViewTickets.main)
 
     def btn_reviewMovie(self, controller, isAdmin):
         self.resetSearch(self.search_entry)

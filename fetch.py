@@ -5,7 +5,9 @@ def readFrom(db, username='', fetch='', alwaysReturnList=False):
     fetchValue = 0
     fetch = fetch.lower()
     results = []
-    if fetch == "admin":
+    if fetch == "user":
+        fetchValue = 0
+    elif fetch == "admin":
         fetchValue = 1
     elif fetch == "password":
         fetchValue = 1
@@ -27,6 +29,16 @@ def readFrom(db, username='', fetch='', alwaysReturnList=False):
         fetchValue = 2
     elif fetch == "reviewRate":
         fetchValue = 3
+    elif fetch == "ticketOwner":
+        fetchValue = 1
+    elif fetch == "ticketShow":
+        fetchValue = 2
+    elif fetch == "ticketTime":
+        fetchValue = 3
+    elif fetch == "ticketBarcode":
+        fetchValue = 4
+    elif fetch == "ticketQty":
+        fetchValue = 5
     try:
         with open(f'{db}.csv', 'r', newline='') as file:
             reader = csv.reader(file)

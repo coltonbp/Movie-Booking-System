@@ -1,9 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 import csv
+import time
 import fetch as db
 import LogIn
 import ViewCatalog
+import Bank
 
 Header1 = ("Helvetica", 25)
 Header2 = ("Helvetica", 16)
@@ -14,6 +16,7 @@ thisSelf=None
 class main(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.controller = controller
 
         #column and row config
         self.columnconfigure(0, weight=1)
@@ -78,14 +81,21 @@ class main(tk.Frame):
         self.showDesc = self.show[2]
         self.showTimes = self.show[3].split(",")
         self.resetForm()
-    
+
     def btn_submit(self, controller):
-        ticket = [len(db.readFrom('tickets', '', '', True)) + 1, db.readFrom('currentLogin', '', '')[0], self.showTitle, self.showVar.get()]
-        db.writeTo('tickets', [ticket], 'a')
-        self.resetForm()
-        self.refresh()
-        ViewCatalog.main.refresh()
-        controller.show_frame(ViewCatalog.main)
+        controller.show_frame(Bank.main)
+
+    def purchaseVerification(self, verification, barcode, nTickets):
+        global thisSelf
+        self = thisSelf
+        if (verification == 1):
+            ticket = [len(db.readFrom('tickets', '', '', True)) + 1, db.readFrom('currentLogin', '', '')[0], self.showTitle, self.showVar.get(), barcode, nTickets]
+            db.writeTo('tickets', [ticket], 'a')
+            self.resetForm()
+            self.refresh()
+            ViewCatalog.main.refresh()
+            print("verif: " + str(verification))
+            self.controller.show_frame(ViewCatalog.main)
 
     def btn_back(self, controller):
         #clear all fields to protect privacy
