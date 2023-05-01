@@ -40,8 +40,6 @@ class main(tk.Frame):
     def refresh(self=thisSelf):
         global thisSelf
         self = thisSelf
-        print("displayed tickets")
-        print(self.displayedTickets)
         i = 0
         for ticket in self.displayedTickets:
             for element in ticket:
@@ -51,7 +49,6 @@ class main(tk.Frame):
         shows = db.readFrom('shows', '', '', True)
         tickets = db.readFrom('tickets', '', '', True)
         user = db.readFrom('currentLogin', '', '')
-        print(user)
         iRow = 2
         for show in shows:
             sales = 0

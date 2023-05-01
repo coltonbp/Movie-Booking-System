@@ -73,7 +73,7 @@ class main(tk.Frame):
         self.back_button.grid(row=16, column=1)
         
     def btn_submit(self, controller):
-        print("submit")
+        #print("submit")
         #get data from entry fields
         username = self.username_entry.get()
         password = self.password_entry.get()
@@ -117,7 +117,7 @@ class main(tk.Frame):
         self.error_label.config(text=error_msg)
 
     def btn_back(self, controller):
-        print("back")
+        #print("back")
         #clear all fields to protect privacy
         self.resetForm()
         controller.show_frame(LogIn.main)

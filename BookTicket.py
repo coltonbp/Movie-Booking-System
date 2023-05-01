@@ -64,7 +64,6 @@ class main(tk.Frame):
         global thisSelf
         self=thisSelf
         self.showTimes = db.readFrom('shows', self.showTitle, 'times').split(",")
-        print(self.showTimes)
         self.show_drop['menu'].delete(0, 'end')
         for time in self.showTimes:
             time = time.strip()
@@ -94,7 +93,6 @@ class main(tk.Frame):
             self.resetForm()
             self.refresh()
             ViewCatalog.main.refresh()
-            print("verif: " + str(verification))
             self.controller.show_frame(ViewCatalog.main)
 
     def btn_back(self, controller):

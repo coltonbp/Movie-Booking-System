@@ -74,7 +74,6 @@ def writeTo(db, rowsToAdd, mode='a'):
     with open(f'{db}.csv', mode, newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         for row in rowsToAdd:
-            print(row)
             writer.writerow(row)
 
 def deleteFrom(db, idToDelete):
@@ -87,7 +86,6 @@ def deleteFrom(db, idToDelete):
     for row in contents:
         if row[0] != idToDelete:
             newContents.append(row)
-    print("contents: " + str(contents))
     with open(f'{db}.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         for row in newContents:

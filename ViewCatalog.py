@@ -147,7 +147,6 @@ class main(tk.Frame):
     def refresh(self=thisSelf, searchterm=''):
         global thisSelf
         global isAdmin
-        print("refresh listings with term: '"+searchterm+"'")
         self = thisSelf
 
         isAdmin = (db.readFrom('currentLogin', '', 'admin') == "True")
@@ -308,15 +307,12 @@ class main(tk.Frame):
     def btn_bookTickets(self, controller, isAdmin, btnId):
         if isAdmin:
             if btnId == 0:
-                print("Edit " + self.show1Title_label["text"])
                 self.btn_reviewMovie(controller, isAdmin)
                 ManageShows.main.selectShow(self, self.show1Title_label["text"])
             elif btnId == 1:
-                print("Edit " + self.show2Title_label["text"])
                 self.btn_reviewMovie(controller, isAdmin)
                 ManageShows.main.selectShow(self, self.show2Title_label["text"])
             elif btnId == 2:
-                print("Edit " + self.show3Title_label["text"])
                 self.btn_reviewMovie(controller, isAdmin)
                 ManageShows.main.selectShow(self, self.show3Title_label["text"])
         else:
@@ -334,7 +330,6 @@ class main(tk.Frame):
                 controller.show_frame(BookTicket.main)
 
     def btn_logOut(self, controller):
-        print("Log Out")
         self.resetSearch(self.search_entry)
         global catalogScroll
         catalogScroll = 0

@@ -62,7 +62,6 @@ class main(tk.Frame):
         self.username = username
         self.isAdmin = isAdmin
         name = db.readFrom("accounts", username, "name")
-        print("New Login: " + self.username + " (" + str(name) + "), isAdmin: " + str(self.isAdmin))
         info = [username, isAdmin, name]
         db.writeTo("currentLogin", [info], 'w')
         ViewCatalog.main.refresh(self)
