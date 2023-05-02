@@ -145,6 +145,7 @@ class main(tk.Frame):
         thisSelf = self
         
     def refresh(self=thisSelf, searchterm=''):
+        print('searching with searchterm: ' + searchterm)
         global thisSelf
         global isAdmin
         self = thisSelf
@@ -171,12 +172,26 @@ class main(tk.Frame):
             name = db.readFrom('currentLogin', '', 'name')
         self.welcome_label.config(text=f"Welcome, {name}")
 
-        #refresh listings
-##        showTimes = ['12:00p', '2:30p', '5:30p', '9:00p']
-##        showDesc = "This very cool movie is bound to knock your socks off! Starring John Johnson and Jane Jackson, Directed by Don Donaldson."
-##        reviewUser = "Movie_Lover"
-##        reviewRate = 1
-##        reviewDesc = "Despite what you might think, this movie is, in fact, not cool at all."
+        #reset all labels
+        self.show1Title_label.config(text='')
+        self.show1Desc_label.config(text='')
+        self.show1Times_label.config(text='')
+        self.show1ReviewUser_label.config(text='')
+        self.show1ReviewDesc_label.config(text='')
+        self.show1ReviewRate_label.config(text='')
+        self.show2Title_label.config(text='')
+        self.show2Desc_label.config(text='')
+        self.show2Times_label.config(text='')
+        self.show2ReviewUser_label.config(text='')
+        self.show2ReviewDesc_label.config(text='')
+        self.show2ReviewRate_label.config(text='')
+        self.show3Title_label.config(text='')
+        self.show3Desc_label.config(text='')
+        self.show3Times_label.config(text='')
+        self.show3ReviewUser_label.config(text='')
+        self.show3ReviewDesc_label.config(text='')
+        self.show3ReviewRate_label.config(text='')
+
         shows = db.searchFor('shows', searchterm)
         reviews = []
         i = 0
